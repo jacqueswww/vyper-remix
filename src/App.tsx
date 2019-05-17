@@ -40,7 +40,9 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // When loaded
-    remixClient.getContract().then(_contract => setContract(_contract))
+    remixClient.getContract()
+      .then(_contract => setContract(_contract))
+      .catch(err => console.log(err))
     // When file changes
     remixClient.onFileChange(_contract => setContract(_contract))
   }, [])

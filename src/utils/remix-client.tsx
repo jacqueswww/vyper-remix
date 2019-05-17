@@ -11,6 +11,7 @@ export class RemixClient {
   /** Emit an event when file changed */
   onFileChange(cb: (contract: Contract) => any) {
     this.client.on('fileManager', 'currentFileChanged', async (name) => {
+      if (!name) return
       const content = await this.client.call('fileManager', 'getFile', name)
       cb({name, content})
     })
@@ -18,7 +19,8 @@ export class RemixClient {
 
   /** Load Ballot contract example into the file manager */
   async loadContract({name, content}: Contract) {
-    return this.client.call('fileManager', 'setFile', name, content)
+    await this.client.call('fileManager', 'setFile', name, content)
+    this.client.call('fileManager', 'switchFile', name)
   }
 
   /** Update the status of the plugin in remix */
@@ -40,6 +42,7 @@ export class RemixClient {
   async getContract(): Promise<Contract> {
     await this.client.onload()
     const name = await this.client.call('fileManager', 'getCurrentFile')
+    if (!name) throw new Error('No contract selected yet')
     const content = await this.client.call('fileManager', 'getFile', name)
     return {
       name,
