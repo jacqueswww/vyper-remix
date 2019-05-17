@@ -44,25 +44,25 @@ function VyperResult({ output }: VyperResultProps) {
     <Tabs id="result" activeKey={active} onSelect={(key: any) => setActive(key)}>
       <Tab eventKey="abi" title="ABI">
         <CopyToClipboard text={JSON.stringify(output.abi)}>
-          <Button className="copy">Copy ABI</Button>
+          <Button variant="info" className="copy">Copy ABI</Button>
         </CopyToClipboard>
         <JSONTree src={output.abi} />
       </Tab>
       <Tab eventKey="bytecode" title="Bytecode">
         <CopyToClipboard text={output.bytecode}>
-          <Button className="copy">Copy Bytecode</Button>
+          <Button variant="info" className="copy">Copy Bytecode</Button>
         </CopyToClipboard>
         <textarea defaultValue={output.bytecode}></textarea>
       </Tab>
       <Tab eventKey="bytecode_runtime" title="Runtime Bytecode">
         <CopyToClipboard text={output.bytecode_runtime}>
-          <Button className="copy">Copy Runtime Bytecode</Button>
+          <Button variant="info" className="copy">Copy Runtime Bytecode</Button>
         </CopyToClipboard>
         <textarea defaultValue={output.bytecode_runtime}></textarea>
       </Tab>
       <Tab eventKey="ir" title="LLL">
         <CopyToClipboard text={output.ir}>
-          <Button className="copy">Copy LLL Code</Button>
+          <Button variant="info" className="copy">Copy LLL Code</Button>
         </CopyToClipboard>
         <textarea defaultValue={output.ir}></textarea>
       </Tab>

@@ -6,9 +6,9 @@ import { VyperCompilationOutput, Contract, RemixClient, RemixClientContext } fro
 import { CompilationResult } from 'remix-plugin'
 
 // Components
-import CompilerButton from './components/compiler-button'
+import CompilerButton from './components/CompilerButton'
 import VyperResult from './components/VyperResult'
-import LocalUrlInput from './components/local-url';
+import LocalUrlInput from './components/LocalUrl';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 
