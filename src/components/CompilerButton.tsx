@@ -12,7 +12,7 @@ import Button from 'react-bootstrap/Button'
 
 interface Props {
   compilerUrl: string
-  contract?: Contract,
+  contract?: string,
   setOutput: (name: string, output: VyperCompilationOutput) => void
 }
 
@@ -20,12 +20,11 @@ function CompilerButton({ contract, setOutput, compilerUrl }: Props) {
 
   const remixClient = useContext(RemixClientContext)
 
-  if (!contract || !contract.name) {
+  if (!contract || !contract) {
     return <Button disabled>No contract selected</Button>
   }
 
-  const name = contractName(contract.name)
-  if (!isVyper(name)) {
+  if (!isVyper(contract)) {
     return <Button disabled>Not a vyper contract</Button>
   }
 
@@ -70,7 +69,7 @@ function CompilerButton({ contract, setOutput, compilerUrl }: Props) {
 
   return (
     <Button onClick={compileContract} variant="primary">
-      Compiler {name}
+      Compiler {contract}
     </Button>
   )
 }
