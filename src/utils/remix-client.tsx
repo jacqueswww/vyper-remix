@@ -9,11 +9,10 @@ export class RemixClient {
   });
 
   /** Emit an event when file changed */
-  onFileChange(cb: (contract: Contract) => any) {
+  onFileChange(cb: (contract: string) => any) {
     this.client.on('fileManager', 'currentFileChanged', async (name) => {
       if (!name) return
-      const content = await this.client.call('fileManager', 'getFile', name)
-      cb({name, content})
+      cb(name)
     })
   }
 
@@ -38,12 +37,18 @@ export class RemixClient {
     return this.client.call('editor', 'discardHighlight')
   }
 
+  /** Get the name of the current contract */
+  async getContractName(): Promise<string> {
+    await this.client.onload()
+    return this.client.call('fileManager', 'getCurrentFile')
+  }
+
   /** Get the current contract file */
   async getContract(): Promise<Contract> {
-    await this.client.onload()
-    const name = await this.client.call('fileManager', 'getCurrentFile')
+    const name = await this.getContractName()
     if (!name) throw new Error('No contract selected yet')
-    const content = await this.client.call('fileManager', 'getFile', name)
+    // const content = await this.client.call('fileManager', 'getFile', name)
+    const content = ''
     return {
       name,
       content,

@@ -30,7 +30,7 @@ interface OutputMap {
 const remixClient = new RemixClient()
 
 const App: React.FC = () => {
-  const [contract, setContract] = useState<Contract>({ name: '', content: '' })
+  const [contract, setContract] = useState<string>()
   const [output, setOutput] = useState<OutputMap>({})
   const [state, setState] = useState<AppState>({
     status: 'idle',
@@ -40,11 +40,11 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // When loaded
-    remixClient.getContract()
-      .then(_contract => setContract(_contract))
+    remixClient.getContractName()
+      .then(name => setContract(name))
       .catch(err => console.log(err))
     // When file changes
-    remixClient.onFileChange(_contract => setContract(_contract))
+    remixClient.onFileChange(name => setContract(name))
   }, [])
 
   /** Update the environment state value */
@@ -94,7 +94,7 @@ const App: React.FC = () => {
               setOutput={(name, update) => setOutput({...output, [name]: update})}/>
           </div>
           <article id="result">
-            <VyperResult output={output[contract.name]} />
+            <VyperResult output={contract ? output[contract] : undefined} />
           </article>
         </section>
       </main>
