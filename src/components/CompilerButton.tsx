@@ -1,12 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {
-  isVyper, contractName,
-  Contract,
+  isVyper,
   compile,
   toStandardOutput,
   VyperCompilationOutput,
   isCompilationError,
-  RemixClientContext
+  remixClient
 } from '../utils'
 import Button from 'react-bootstrap/Button'
 
@@ -18,7 +17,7 @@ interface Props {
 
 function CompilerButton({ contract, setOutput, compilerUrl }: Props) {
 
-  const remixClient = useContext(RemixClientContext)
+  // const remixClient = useContext(RemixClientContext)
 
   if (!contract || !contract) {
     return <Button disabled>No contract selected</Button>
