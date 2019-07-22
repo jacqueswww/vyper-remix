@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   VyperCompilationResult,
   VyperCompilationOutput,
   isCompilationError,
-  RemixClientContext
+  remixClient
 } from '../utils';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
@@ -21,7 +21,7 @@ interface VyperResultProps {
 
 function VyperResult({ output }: VyperResultProps) {
   const [ active, setActive ] = useState<keyof VyperCompilationResult>('abi');
-  const remixClient = useContext(RemixClientContext)
+  // const remixClient = useContext(RemixClientContext)
   
   if (!output) return (
     <div id="result">

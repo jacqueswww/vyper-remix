@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
-import { VyperCompilationOutput, Contract, RemixClient, RemixClientContext } from './utils'
-import { CompilationResult } from 'remix-plugin'
+import { VyperCompilationOutput, remixClient } from './utils'
+import { CompilationResult } from '@remixproject/plugin'
 
 // Components
 import CompilerButton from './components/CompilerButton'
@@ -27,8 +27,6 @@ interface OutputMap {
   [fileName: string]: VyperCompilationOutput
 }
 
-const remixClient = new RemixClient()
-
 const App: React.FC = () => {
   const [contract, setContract] = useState<string>()
   const [output, setOutput] = useState<OutputMap>({})
@@ -39,12 +37,13 @@ const App: React.FC = () => {
   })
 
   useEffect(() => {
-    // When loaded
-    remixClient.getContractName()
-      .then(name => setContract(name))
-      .catch(err => console.log(err))
-    // When file changes
-    remixClient.onFileChange(name => setContract(name))
+    async function start() {
+      await remixClient.loaded()
+      remixClient.onFileChange(name => setContract(name))
+      const name = await remixClient.getContractName()
+      setContract(name)
+    }
+    start()
   }, [])
 
   /** Update the environment state value */
@@ -63,7 +62,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <RemixClientContext.Provider value={remixClient}>
+    // <RemixClientContext.Provider value={remixClient}>
       <main id="vyper-plugin">
         <header className="bg-light">
           <div className="title">
@@ -98,7 +97,7 @@ const App: React.FC = () => {
           </article>
         </section>
       </main>
-    </RemixClientContext.Provider>
+    // </RemixClientContext.Provider>
   )
 }
 

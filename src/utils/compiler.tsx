@@ -1,4 +1,4 @@
-import { CompilationResult, ABIDescription } from "remix-plugin";
+import { CompilationResult, ABIDescription } from "@remixproject/plugin";
 
 export interface Contract {
   name: string;

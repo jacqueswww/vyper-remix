@@ -1,16 +1,17 @@
-import React from 'react'
-import { createIframeClient, remixApi, Status, HighlightPosition, CompilationResult } from 'remix-plugin';
+import { createIframeClient, Api, Status, HighlightPosition, CompilationResult, RemixApi } from '@remixproject/plugin';
 import { Contract } from './compiler';
 
 export class RemixClient {
-  private client = createIframeClient({
-    devMode: { port: 8080 },
-    customApi: remixApi
-  });
+  private client = createIframeClient<Api, RemixApi>();
+
+  loaded() {
+    return this.client.onload()
+  }
 
   /** Emit an event when file changed */
-  onFileChange(cb: (contract: string) => any) {
+  async onFileChange(cb: (contract: string) => any) {
     this.client.on('fileManager', 'currentFileChanged', async (name) => {
+      console.log('file changes', name)
       if (!name) return
       cb(name)
     })
@@ -61,4 +62,5 @@ export class RemixClient {
   }
 }
 
-export const RemixClientContext = React.createContext(new RemixClient())
+export const remixClient = new RemixClient()
+// export const RemixClientContext = React.createContext(new RemixClient())
