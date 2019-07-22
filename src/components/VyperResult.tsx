@@ -21,7 +21,6 @@ interface VyperResultProps {
 
 function VyperResult({ output }: VyperResultProps) {
   const [ active, setActive ] = useState<keyof VyperCompilationResult>('abi');
-  // const remixClient = useContext(RemixClientContext)
   
   if (!output) return (
     <div id="result">

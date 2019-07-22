@@ -17,8 +17,6 @@ interface Props {
 
 function CompilerButton({ contract, setOutput, compilerUrl }: Props) {
 
-  // const remixClient = useContext(RemixClientContext)
-
   if (!contract || !contract) {
     return <Button disabled>No contract selected</Button>
   }
@@ -68,7 +66,7 @@ function CompilerButton({ contract, setOutput, compilerUrl }: Props) {
 
   return (
     <Button onClick={compileContract} variant="primary">
-      Compiler {contract}
+      Compile {contract}
     </Button>
   )
 }
