@@ -55,9 +55,6 @@ export async function compile(url: string, contract: Contract): Promise<VyperCom
   if (response.status === 400) {
     throw new Error(`Vyper compilation failed: ${response.statusText}`)
   }
-  if (response.status !== 200) {
-    throw new Error(`An error has occurred at "${url}". ${response.statusText}`)
-  }
   return response.json()
 }
 

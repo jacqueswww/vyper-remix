@@ -37,10 +37,14 @@ const App: React.FC = () => {
 
   useEffect(() => {
     async function start() {
-      await remixClient.loaded()
-      remixClient.onFileChange(name => setContract(name))
-      const name = await remixClient.getContractName()
-      setContract(name)
+      try {
+        await remixClient.loaded()
+        remixClient.onFileChange(name => setContract(name))
+        const name = await remixClient.getContractName()
+        setContract(name)
+      } catch (err) {
+        console.log(err)
+      }
     }
     start()
   }, [])

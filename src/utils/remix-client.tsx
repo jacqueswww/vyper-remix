@@ -18,8 +18,12 @@ export class RemixClient {
 
   /** Load Ballot contract example into the file manager */
   async loadContract({name, content}: Contract) {
-    await this.client.call('fileManager', 'setFile', name, content)
-    this.client.call('fileManager', 'switchFile', name)
+    try {
+      await this.client.call('fileManager', 'setFile', name, content)
+      await this.client.call('fileManager', 'switchFile', name)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   /** Update the status of the plugin in remix */
