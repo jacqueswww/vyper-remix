@@ -48,19 +48,17 @@ export async function compile(url: string, contract: Contract): Promise<VyperCom
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ code: contract.content })
   })
-  return response.json()
 
-  // if (response.status === 404) {
-  //   throw new Error(`Vyper compiler not found at "${url}".`)
-  // }
-  // if (response.status === 400) {
-  //   throw new Error(contract.name)
-  // }
-  // if (response.status !== 200) {
-  //   const message = `An error has occurred at "${url}". ${response.statusText}`;
-  // }
-  // return response.json()
-  
+  if (response.status === 404) {
+    throw new Error(`Vyper compiler not found at "${url}".`)
+  }
+  if (response.status === 400) {
+    throw new Error(`Vyper compilation failed: ${response.statusText}`)
+  }
+  if (response.status !== 200) {
+    throw new Error(`An error has occurred at "${url}". ${response.statusText}`)
+  }
+  return response.json()
 }
 
 /**

@@ -61,6 +61,7 @@ function CompilerButton({ contract, setOutput, compilerUrl }: Props) {
         type: 'error',
         title: err.message
       })
+      console.error(err)
     }
   }
 

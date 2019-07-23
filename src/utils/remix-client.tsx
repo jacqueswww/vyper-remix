@@ -11,7 +11,6 @@ export class RemixClient {
   /** Emit an event when file changed */
   async onFileChange(cb: (contract: string) => any) {
     this.client.on('fileManager', 'currentFileChanged', async (name) => {
-      console.log('file changes', name)
       if (!name) return
       cb(name)
     })
