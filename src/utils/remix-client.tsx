@@ -51,7 +51,7 @@ export class RemixClient {
   async getContract(): Promise<Contract> {
     const name = await this.getContractName()
     if (!name) throw new Error('No contract selected yet')
-    const content = ''
+    const content = await this.client.call('fileManager', 'getFile', name)
     return {
       name,
       content,
